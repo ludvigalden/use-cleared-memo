@@ -1,7 +1,7 @@
 {
 	"name": "use-cleared-memo",
 	"description": "useClearedMemo(getFn, clearFn, deps)",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"license": "MIT",
 	"author": "Ludvig Aldén <ludvig@tifum.com>",
 	"repository": "ludvigalden/use-cleared-memo",
