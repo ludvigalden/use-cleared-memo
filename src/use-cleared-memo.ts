@@ -10,23 +10,44 @@ import React from "react";
  * = useClearedMemo(getFn, clearFn, deps)
  * ```
  */
-export default function useClearedMemo<T>(getFn: () => T, clearFn: (previousValue: T) => void, deps: readonly any[] = []) {
-    const value = React.useMemo(() => ({ current: getFn(), mounted: false }), []);
+export default function useClearedMemo<T>(
+    getFn: () => T,
+    clearFn: (previousValue: T) => void,
+    deps: readonly any[] = [],
+    clearFnDeps?: readonly any[],
+) {
+    const value = React.useRef<T>(INITIAL_VALUE);
+    const clearedValue = React.useRef<boolean>(true);
 
-    React.useEffect(() => {
-        if (value.mounted) {
-            value.current = getFn();
-        } else {
-            value.mounted = true;
+    React.useMemo(() => {
+        if (!clearedValue.current) {
+            clearFn(value.current);
         }
-
-        return () => {
-            if (value.current !== INITIAL_VALUE) {
-                clearFn(value.current);
-                value.current = INITIAL_VALUE;
-            }
-        };
+        value.current = getFn();
+        clearedValue.current = false;
     }, deps);
+
+    if (clearFnDeps && clearFnDeps.length > 0) {
+        const clearFnRef = React.useRef<typeof clearFn>();
+        clearFnRef.current = clearFn;
+        React.useEffect(() => {
+            return () => {
+                if (!clearedValue.current) {
+                    (clearFnRef.current as typeof clearFn)(value.current);
+                    clearedValue.current = true;
+                }
+            };
+        }, []);
+    } else {
+        React.useEffect(() => {
+            return () => {
+                if (!clearedValue.current) {
+                    clearFn(value.current);
+                    clearedValue.current = true;
+                }
+            };
+        }, []);
+    }
 
     return value.current;
 }
