@@ -1,16 +1,24 @@
 import React from "react";
 
 /**
- * Allows for clearing a memoized value when dependencies change as well as on unmount.
+ * Allows for clearing a memoized value when dependencies change as well as on unmount. The code
+ * below is a simplified version of the functionality, which omits the critical fact that the
+ * *every value that has been retrieved will be cleared before the next one is retrieved **or** when the component unmounts*.
+ * That means every retrieved value will be cleared, and only once. The most obvious use-case for this is creating subscriptions,
+ * which either just needs to get unsubscribed on unmount or hydrated when a new subscription should be created (based on the deps).
+ *
+ * The fourth and last argument, the clearFnDeps, are only used to ensure the right clearFn is used when unmounting, which is solved by creating a ref that the unmount effect has access to.
  *
  * ```typescript
- *  React.useMemo(getFn, deps)
- * + React.useEffect(() => clearFn, deps)
- *
- * = useClearedMemo(getFn, clearFn, deps)
+ *  React.useMemo(() => {
+ *     clearFn(value);
+ *     return getFn();
+ *  }, deps)
+ * + React.useEffect(() => clearFn, []);
+ * = useClearedMemo(getFn, clearFn, deps);
  * ```
  */
-export default function useClearedMemo<T>(
+export function useClearedMemo<T>(
     getFn: () => T,
     clearFn: (previousValue: T) => void,
     deps: readonly any[] = [],

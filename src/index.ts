@@ -1,1 +1,1 @@
-export { default } from "./use-cleared-memo";
+export * from "./use-cleared-memo";
