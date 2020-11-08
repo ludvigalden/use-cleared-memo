@@ -39,6 +39,21 @@ export function useClearedMemo<T>(
         const clearFnRef = React.useRef<typeof clearFn>();
         clearFnRef.current = clearFn;
         React.useEffect(() => {
+            /**
+             * In some cases, the effect cleanup function will be called even though the component is not truly unmounted, but to perform updates.
+             * That is, the value is cleared, but is not retrieved again as the React.useMemo is not updated. In short, we have a cleared value that is still in use in some cases.
+             * We solve this by checking if the value has been cleared when mounting the component, which means the effect cleanup function was called just before performing the effect again.
+             *
+             * The obvious problem here is that even though a new value is assigned, it is not returned from the hook. Instead, we get a sort of "useClearedValueEffect" functionality.
+             * I have not found a good solution to this, so it will just have to be a problem that one might have to deal with in other places. For instance, to perform component updates in the
+             * "getFn" in the cases where necessary. As a relief, though, the most useful and therefore important part of `useClearedMemo` is actually
+             * clearing the value, so maybe this isn't that big of a deal.
+             */
+            if (clearedValue.current) {
+                value.current = getFn();
+                clearedValue.current = false;
+            }
+
             return () => {
                 if (!clearedValue.current) {
                     (clearFnRef.current as typeof clearFn)(value.current);
@@ -48,6 +63,12 @@ export function useClearedMemo<T>(
         }, []);
     } else {
         React.useEffect(() => {
+            // see comment in effect above, same deal here
+            if (clearedValue.current) {
+                value.current = getFn();
+                clearedValue.current = false;
+            }
+
             return () => {
                 if (!clearedValue.current) {
                     clearFn(value.current);
