@@ -38,13 +38,12 @@
     }
   },
   "scripts": {
-    "postinstall": "preconstruct dev",
     "build": "preconstruct fix && preconstruct build",
     "release": "yarn build && changeset publish",
     "test": "jest",
     "clean": "rm -rf node_modules && rm -rf dist",
     "lint": "yarn eslint .",
-    "prepare": "husky install"
+    "prepare": "preconstruct dev && husky install"
   },
   "devDependencies": {
     "@babel/core": "^7.18.0",
