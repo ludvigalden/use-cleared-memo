@@ -84,11 +84,11 @@
     "react": ">=16.8.0"
   },
   "lint-staged": {
-    "*.{ts|tsx}": [
+    "*.ts|tsx": [
       "eslint --cache --fix",
       "tsc --noEmit --esModuleInterop"
     ],
-    "*.{js|jsx}": "eslint --cache --fix"
+    "*.js|jsx": "eslint --cache --fix"
   },
   "browserslist": [
     "defaults",
