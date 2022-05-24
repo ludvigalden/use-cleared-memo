@@ -1,1 +1,1 @@
-export * from "./use-cleared-memo";
+export * from './useClearedMemo';

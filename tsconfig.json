@@ -1,40 +1,39 @@
 {
-	"compilerOptions": {
-		"target": "esnext",
-		"module": "ESNext",
-		"importHelpers": true,
-		"declaration": true,
-		"sourceMap": true,
-		"rootDir": "./src",
-		"strict": true,
-		"noImplicitAny": true,
-		"strictNullChecks": true,
-		"strictFunctionTypes": true,
-		"strictPropertyInitialization": false,
-		"noImplicitThis": true,
-		"alwaysStrict": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"preserveSymlinks": true,
-		"forceConsistentCasingInFileNames": true,
-		"removeComments": false,
-		"preserveConstEnums": true,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"pretty": true,
-		"lib": [
-			"esnext"
-		],
-	},
-	"include": [
-		"src",
-		"types"
-	]
+  "baseUrl": ".",
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "types": [
+    "jest",
+    "invariant",
+    "eslint",
+    "estree",
+    "webpack"
+  ],
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2015",
+    "lib": [
+      "esnext"
+    ],
+    "rootDir": ".",
+    "noEmit": true,
+    "strict": true,
+    "allowJs": false,
+    "checkJs": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": false,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitThis": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true
+  }
 }
