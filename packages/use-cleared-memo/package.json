@@ -2,7 +2,7 @@
   "name": "use-cleared-memo",
   "sideEffects": false,
   "description": "useClearedMemo(getFn, clearFn, deps, clearFnDeps)",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "license": "MIT",
   "author": {
     "name": "Ludvig Aldén",
