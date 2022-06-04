@@ -1,13 +1,13 @@
 # use-cleared-memo
 
-## 1.4.1
+## 1.4.2
 
 ### Patch Changes
 
-- dev env
+- remove unnecessary use of initial value symbol
 
 ## 1.4.0
 
 ### Minor Changes
 
-- refactor dev env
+- refactor development environment
