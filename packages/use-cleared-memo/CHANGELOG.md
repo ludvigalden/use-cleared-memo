@@ -1,5 +1,11 @@
 # use-cleared-memo
 
+## 1.4.3
+
+### Patch Changes
+
+- include umd build
+
 ## 1.4.2
 
 ### Patch Changes
