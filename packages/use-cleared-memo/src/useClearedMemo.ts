@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from 'react';
 /**
  * Allows for clearing a memoized value when dependencies change as well as on unmount. The code
  * below is a simplified version of the functionality, which omits the critical fact that the
- * *every value that has been retrieved will be cleared before the next one is retrieved **or** when the component unmounts*.
+ * every value that has been retrieved will be cleared before the next one is retrieved **or** when the component unmounts*.
  * That means every retrieved value will be cleared, and only once. The most obvious use-case for this is creating subscriptions,
  * which either just needs to get unsubscribed on unmount or hydrated when a new subscription should be created (based on the deps).
  *
@@ -20,7 +20,7 @@ import { useEffect, useMemo, useRef } from 'react';
  * @param {function(T): void} clearFn - Clears the previously memoized value when the component unmounts or the deps change.
  * @param {ReadonlyArray} deps - Identities that the `getFn` depends on. When changed, the previously memoized value will be cleared and the `getFn` will be called to retrieve the new value.
  * @param {ReadonlyArray} clearFnDeps - Identities that the `clearFn` depends on.
- * @returns {T}
+ * @returns {T} The value to be memoized and cleared appropriately.
  * @template T
  */
 export function useClearedMemo<T>(
@@ -29,7 +29,7 @@ export function useClearedMemo<T>(
   deps: readonly any[] = [],
   clearFnDeps?: readonly any[],
 ): T {
-  const value = useRef<T>(INITIAL_VALUE);
+  const value = useRef<T>();
   const clearedValue = useRef<boolean>(true);
 
   useMemo(() => {
@@ -43,7 +43,9 @@ export function useClearedMemo<T>(
 
   if (clearFnDeps && clearFnDeps.length > 0) {
     const clearFnRef = useRef<typeof clearFn>();
+
     clearFnRef.current = clearFn;
+
     useEffect(() => {
       /**
        * In some cases, the effect cleanup function will be called even though the component is not truly unmounted, but to perform updates.
@@ -62,7 +64,7 @@ export function useClearedMemo<T>(
 
       return () => {
         if (!clearedValue.current) {
-          (clearFnRef.current as typeof clearFn)(value.current);
+          clearFnRef.current(value.current);
           clearedValue.current = true;
         }
       };
@@ -86,5 +88,3 @@ export function useClearedMemo<T>(
 
   return value.current;
 }
-
-const INITIAL_VALUE: never = Symbol('initial') as never;
