@@ -34,9 +34,16 @@
   "main": "dist/use-cleared-memo.cjs.js",
   "types": "dist/use-cleared-memo.cjs.d.ts",
   "module": "dist/use-cleared-memo.esm.js",
+  "umd:main": "dist/use-cleared-memo.umd.min.js",
   "files": [
     "dist"
   ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ],
+    "umdName": "useClearedMemo"
+  },
   "devDependencies": {
     "react": "^18.1.0"
   },
