@@ -17,4 +17,4 @@ Are you building a hook or functional React component that needs to predictably 
 
 ---
 
-[MIT License.](https://github.com/ludvigalden/use-cleared-memo/blob/master/LICENSE)
+[MIT License.](https://github.com/ludvigalden/use-cleared-memo/blob/main/LICENSE)

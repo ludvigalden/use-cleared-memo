@@ -14,7 +14,7 @@ Are you building a hook or functional React component that needs to predictably 
 ## useClearedMemo(getFn, clearFn, deps, clearFnDeps) ⇒ <code>T</code>
 <p>Allows for clearing a memoized value when dependencies change as well as on unmount. The code
 below is a simplified version of the functionality, which omits the critical fact that the
-<em>every value that has been retrieved will be cleared before the next one is retrieved <strong>or</strong> when the component unmounts</em>.
+every value that has been retrieved will be cleared before the next one is retrieved <strong>or</strong> when the component unmounts*.
 That means every retrieved value will be cleared, and only once. The most obvious use-case for this is creating subscriptions,
 which either just needs to get unsubscribed on unmount or hydrated when a new subscription should be created (based on the deps).</p>
 <pre class="prettyprint source lang-typescript"><code> React.useMemo(() => {
@@ -26,6 +26,7 @@ which either just needs to get unsubscribed on unmount or hydrated when a new su
 </code></pre>
 
 **Kind**: global function  
+**Returns**: <code>T</code> - <p>The value to be memoized and cleared appropriately.</p>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -41,4 +42,4 @@ which either just needs to get unsubscribed on unmount or hydrated when a new su
 
 ---
 
-[MIT License.](https://github.com/ludvigalden/use-cleared-memo/blob/master/LICENSE)
+[MIT License.](https://github.com/ludvigalden/use-cleared-memo/blob/main/LICENSE)

@@ -6,8 +6,9 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
+    'plugin:jsdoc/recommended',
   ],
-  plugins: ['babel', 'prettier', 'unused-imports', 'import'],
+  plugins: ['babel', 'prettier', 'unused-imports', 'import', 'sort-export-all', 'jsdoc'],
   env: { browser: false, commonjs: true, es6: true, jest: true, node: false },
   parserOptions: { ecmaVersion: 2018, sourceType: 'module' },
   ignorePatterns: ['**/*.cjs.*', '**/*.esm.*'],
@@ -32,7 +33,6 @@ module.exports = {
         ],
         '@typescript-eslint/no-non-null-assertion': 0,
         '@typescript-eslint/ban-ts-comment': 0,
-        //       "@typescript-eslint/explicit-module-boundary-types": 0,
         '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
         '@typescript-eslint/no-explicit-any': 0,
         '@typescript-eslint/explicit-module-boundary-types': 0,
@@ -41,8 +41,42 @@ module.exports = {
         'padding-line-between-statements': 'off',
         '@typescript-eslint/padding-line-between-statements': [
           'error',
-          { blankLine: 'always', prev: ['type', 'interface', 'block-like'], next: '*' },
-          { blankLine: 'always', prev: '*', next: ['return', 'type', 'interface'] },
+          {
+            blankLine: 'always',
+            prev: [
+              'const',
+              'let',
+              'var',
+              'type',
+              'interface',
+              'throw',
+              'block-like',
+              'class',
+              'multiline-expression',
+            ],
+            next: '*',
+          },
+          {
+            blankLine: 'always',
+            prev: '*',
+            next: [
+              'const',
+              'let',
+              'var',
+              'type',
+              'interface',
+              'throw',
+              'block-like',
+              'class',
+              'multiline-expression',
+            ],
+          },
+          {
+            blankLine: 'any',
+            prev: ['singleline-const', 'singleline-let', 'singleline-var'],
+            next: ['singleline-const', 'singleline-let', 'singleline-var'],
+          },
+          { blankLine: 'any', prev: ['expression'], next: ['expression'] },
         ],
         '@typescript-eslint/lines-between-class-members': [
           'error',
@@ -119,7 +153,6 @@ module.exports = {
   ],
   rules: {
     'no-confusing-arrow': ['error', { allowParens: true }],
-    curly: ['error', 'all'],
     'spaced-comment': [
       'error',
       'always',
@@ -128,7 +161,6 @@ module.exports = {
         block: { markers: ['!'], exceptions: ['*'], balanced: true },
       },
     ],
-    'lines-around-comment': 0,
     'unused-imports/no-unused-imports': 'error',
     'sort-imports': [
       'error',
@@ -148,7 +180,7 @@ module.exports = {
       },
     ],
     'import/order': [
-      2,
+      'error',
       {
         'newlines-between': 'always',
         groups: ['external', 'unknown', 'internal', ['parent', 'sibling'], 'index'],
@@ -159,11 +191,24 @@ module.exports = {
         ],
       },
     ],
-    'prefer-const': 2,
-    'prefer-object-spread': 1,
-    'no-duplicate-imports': 2,
-    'no-return-await': 2,
+    'prefer-const': 'error',
+    'prefer-object-spread': 'error',
+    'no-duplicate-imports': 'error',
+    'no-return-await': 'error',
     'prettier/prettier': 'error',
     'padded-blocks': ['error', 'never'],
+    'sort-export-all/sort-export-all': ['error', 'asc', { caseSensitive: false, natural: true }],
+    'jsdoc/check-tag-names': [
+      'error',
+      {
+        definedTags: ['typicalname'],
+      },
+    ],
+    'jsdoc/require-returns': [
+      'error',
+      {
+        checkGetters: false,
+      },
+    ],
   },
 };
